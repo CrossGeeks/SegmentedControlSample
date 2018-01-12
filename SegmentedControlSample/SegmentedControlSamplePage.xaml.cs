@@ -9,7 +9,7 @@ namespace SegmentedControlSample
         public SegmentedControlSamplePage()
         {
             InitializeComponent();
-            var vehicleTypes = new List<string>() { "Car", "Motocycle", "Plane", "Boat", "Bike", "Jeep", "Train", "Truck" };
+            var vehicleTypes = new List<string>() {  "Motocycle", "Car", "Plane", "Boat", "Bike", "Jeep", "Train", "Truck" };
             segment.Children = vehicleTypes;
         }
 
