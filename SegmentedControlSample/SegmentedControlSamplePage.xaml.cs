@@ -13,9 +13,9 @@ namespace SegmentedControlSample
             segment.Children = vehicleTypes;
         }
 
-        void Handle_ValueChanged(object sender, System.EventArgs e)
+        void Handle_SelectedItemChanged(object sender, SelectedItemChangedEventArgs e)
         {
-            ItemSelectedText.Text = segment.ItemSelected;
+            ItemSelectedText.Text = $"{e.SelectedItem}";
         }
     }
 }

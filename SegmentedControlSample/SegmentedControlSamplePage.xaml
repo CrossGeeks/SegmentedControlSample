@@ -5,7 +5,7 @@
              x:Class="SegmentedControlSample.SegmentedControlSamplePage">
     <StackLayout Padding="0,5">
 
-       <local:SegmentedBarControl ValueChanged="Handle_ValueChanged" 
+        <local:SegmentedBarControl SelectedItemChanged="Handle_SelectedItemChanged" 
                              x:Name="segment" 
                              AutoScroll="true"
                              TextColor="Black" 

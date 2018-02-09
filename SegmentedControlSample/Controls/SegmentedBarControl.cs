@@ -15,8 +15,37 @@ namespace SegmentedControlSample
         public static readonly BindableProperty SelectedTextColorProperty = BindableProperty.Create(nameof(SelectedTextColor), typeof(Color), typeof(SegmentedBarControl), Color.Black);
         public static readonly BindableProperty AutoScrollProperty = BindableProperty.Create(nameof(AutoScroll), typeof(bool), typeof(SegmentedBarControl), true);
 
-        public delegate void ValueChangedEventHandler(object sender, EventArgs e);
-        public event ValueChangedEventHandler ValueChanged;
+
+        public static readonly BindableProperty SelectedItemChangedCommandProperty = BindableProperty.Create(nameof(SelectedItemChangedCommand), typeof(Command<string>), typeof(SegmentedBarControl), default(Command<string>), BindingMode.TwoWay, null, SelectedItemChangedCommandPropertyChanged);
+
+        static void SelectedItemChangedCommandPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var source = bindable as SegmentedBarControl;
+            if (source == null)
+            {
+                return;
+            }
+            source.SelectedItemChangedCommandChanged();
+        }
+
+        private void SelectedItemChangedCommandChanged()
+        {
+            OnPropertyChanged("SelectedItemChangedCommand");
+        }
+
+        public Command<string> SelectedItemChangedCommand
+        {
+            get
+            {
+                return (Command<string>)GetValue(SelectedItemChangedCommandProperty);
+            }
+            set
+            {
+                SetValue(SelectedItemChangedCommandProperty, value);
+            }
+        }
+        public delegate void SelectedItemChangedEventHandler(object sender, SelectedItemChangedEventArgs e);
+        public event SelectedItemChangedEventHandler SelectedItemChanged;
 
 		public string ItemSelected
 		{
@@ -27,7 +56,8 @@ namespace SegmentedControlSample
 			set
 			{
 				SetValue(ItemSelectedProperty, value);
-                ValueChanged(this, new EventArgs());
+                SelectedItemChanged(this, new SelectedItemChangedEventArgs(value));
+                SelectedItemChangedCommand?.Execute(value);
 			}
 		}
 
